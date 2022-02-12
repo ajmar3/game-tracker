@@ -1,2 +1,5 @@
 dist/
 packages/server/package-lock.json
+packages/web/package-lock.json
+
+packages/server/node_modules
