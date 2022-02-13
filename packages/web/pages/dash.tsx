@@ -1,12 +1,10 @@
 import { NextPage } from "next";
 import Head from "next/head";
 import { useMediaQuery } from 'react-responsive'
+import DashDesktopPage from "../components/desktop/dashDesktopPage";
+import DashMobilePage from "../components/mobile/dashDesktopPage";
 
-import LoginDesktopPage from "../components/desktop/loginDesktopPage";
-import LoginMobilePage from "../components/mobile/loginMobilePage";
-
-
-const LoginPage: NextPage = () => {
+const DashPage: NextPage = () => {
   
   const isDesktop = useMediaQuery({ minWidth: 1440 })
 
@@ -14,9 +12,9 @@ const LoginPage: NextPage = () => {
     return (
       <div className="w-screen h-screen">
         <Head>
-          <title>MpsBelfast</title>
+          <title>Desktop</title>
         </Head>
-        <LoginDesktopPage />
+        <DashDesktopPage />
       </div>
     )
   }
@@ -24,12 +22,12 @@ const LoginPage: NextPage = () => {
     return (
       <div className="w-screen h-screen">
         <Head>
-          <title>MpsBelfast</title>
+          <title>Mobile</title>
         </Head>
-        <LoginMobilePage />
+        <DashMobilePage />
       </div>
     )
   }
   }
 
-export default LoginPage
+export default DashPage

@@ -7,9 +7,6 @@ const LoginDesktopPage: React.FC = () => {
 
   return (
     <div className="flex justify-center items-center w-full h-full">
-      <Head>
-        <title>MpsBelfast</title>
-      </Head>
       <div className="h-1/2 w-1/3 flex-col bg-dark-blue text-white rounded-xl">
         <div className="text-2xl text-center pb-8 pt-12">
           Sign In

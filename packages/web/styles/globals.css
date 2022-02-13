@@ -14,3 +14,11 @@ body {
 * {
   box-sizing: border-box;
 }
+
+.h-90 {
+  height: 90%;
+}
+
+.h-10 {
+  height: 10%;
+}
