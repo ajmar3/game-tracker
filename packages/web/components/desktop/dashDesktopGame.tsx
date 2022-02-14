@@ -3,6 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTrophy, faMedal, faHashtag } from '@fortawesome/free-solid-svg-icons'
 import DashDesktopNav from "./dashDesktopNav"
 import DashDesktopAllGamesTable from "./dashDesktopAllGamesTable"
+import DashDesktopRatingsTable from "./dashDesktopRatingsTable"
 
 
 const DashDesktopGame: React.FC = () => {
@@ -46,7 +47,7 @@ const DashDesktopGame: React.FC = () => {
             </div>
             <div className="w-1/2 flex justify-center items-center">
               <div className="w-11/12 h-90p rounded-2xl bg-med-dark-blue">
-                <DashDesktopAllGamesTable />
+                <DashDesktopRatingsTable />
               </div>
             </div>
             </div>
