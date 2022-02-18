@@ -15,15 +15,30 @@ export class UserDao {
     return await this.userModel.find();
   }
 
-  async createUser(model: createUserDto) {
-    const createdUser = new this.userModel(model)
+  async createUser(input: createUserDto, hashedPassword: string) {
+    
+    const modelInput = {
+      "firstName": input.firstName,
+      "lastName": input.lastName,
+      "email": input.email,
+      "isAdmin": input.isAdmin,
+      "passwordHash": hashedPassword,
+    }
+
+    const createdUser = new this.userModel(modelInput)
   
     await createdUser.save();
   
     return createdUser
   }
 
-  async getUser(userId: string){
+  async getUserById(userId: string){
     return await this.userModel.findById(userId);
   }
+
+  async getUserByEmail(email: string){
+    console.log(email)
+    return await this.userModel.findOne({ email: email });
+  }
+  
 }

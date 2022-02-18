@@ -5,23 +5,28 @@ import { UserDao } from './user.dao';
 import { createUserDto } from './user.models';
 import { User, UserDocument } from './user.schema';
 
+const bcrypt = require('bcrypt')
+
 @Injectable()
 export class UserService {
   constructor(private userDao: UserDao) {}
 
   async getAll(){
-    await this.userDao.getAll();
+    return await this.userDao.getAll();
   }
 
-  async createUser(model: createUserDto) {
-    return this.userDao.createUser(model);
+  async createUser(input: createUserDto) {
+    console.log(input)
+    const hashedPassword = await bcrypt.hash(input.password, 14)
+
+    return this.userDao.createUser(input, hashedPassword);
   }
 
-  async getUser(userId: string){
-    await this.userDao.getUser(userId);
+  async getUserById(userId: string){
+    return await this.userDao.getUserById(userId);
   }
 
-  async createAdminUser(model: createUserDto) {
-    return this.userDao.createUser(model);
+  async getUserByEmail(email: string){
+    return await this.userDao.getUserByEmail(email);
   }
 }

@@ -4,6 +4,9 @@ import { AppModule } from './app/app.module';
 import { appConfig } from './config'
 
 async function bootstrap() {
+
+  process.env.JWT_TOKEN_SECRET = appConfig.JWT_TOKEN_SECRET;
+
   const app = await NestFactory.create(AppModule);
 
   const config = new DocumentBuilder()

@@ -10,5 +10,6 @@ import { UserDao } from './user.dao';
   imports: [MongooseModule.forFeature([{ name: User.name, schema: UserSchema }])],
   controllers: [UserController],
   providers: [UserService, UserDao],
+  exports: [UserService],
 })
 export class UserModule {}

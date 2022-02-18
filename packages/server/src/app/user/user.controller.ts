@@ -18,6 +18,6 @@ export class UserController {
 
   @Get(':id')
   async getUser(@Param("id") userId: string) {
-    return await this.userService.getUser(userId);
+    return await this.userService.getUserById(userId);
   }
 }

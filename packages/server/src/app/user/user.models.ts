@@ -2,6 +2,6 @@ export type createUserDto = {
   firstName: string
   lastName: string
   email: string
-  passwordHash: string
+  password: string
   isAdmin: boolean
 }
