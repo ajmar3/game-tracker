@@ -16,7 +16,6 @@ export class UserService {
   }
 
   async createUser(input: createUserDto) {
-    console.log(input)
     const hashedPassword = await bcrypt.hash(input.password, 14)
 
     return this.userDao.createUser(input, hashedPassword);
