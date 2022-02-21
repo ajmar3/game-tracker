@@ -11,10 +11,16 @@ import { JwtAuthGuard } from './auth/jwt.guard';
 import { JwtModule, JwtService } from '@nestjs/jwt';
 
 @Module({
-  imports: [UserModule, AuthModule, MongooseModule.forRoot(appConfig.MONGO_URL), AuthModule, JwtModule.register({
-    secret: appConfig.JWT_TOKEN_SECRET,
-    signOptions: { expiresIn: '60s' },
-  }),],
+  imports: [
+    UserModule,
+    AuthModule,
+    MongooseModule.forRoot(appConfig.MONGO_URL),
+    AuthModule,
+    JwtModule.register({
+      secret: appConfig.JWT_TOKEN_SECRET,
+      signOptions: { expiresIn: '60s' },
+    }),
+  ],
   controllers: [AppController],
   providers: [],
 })
