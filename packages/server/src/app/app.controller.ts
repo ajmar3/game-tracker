@@ -9,7 +9,7 @@ import { JwtAuthGuard } from './auth/jwt.guard';
 export class AppController {
   constructor() {}
 
-  @Admin()
+  @Public()
   @Get('pub')
   publicTest(@Request() req) {
     return "Public";
