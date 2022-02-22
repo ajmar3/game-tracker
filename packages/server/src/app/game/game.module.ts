@@ -14,6 +14,6 @@ import { GameDao } from './game.dao';
   ],
   controllers: [GameController],
   providers: [GameService, GameDao],
-  exports: [GameService],
+  exports: [GameService, GameDao],
 })
-export class UserModule {}
+export class GameModule {}

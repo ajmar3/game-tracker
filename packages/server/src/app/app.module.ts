@@ -9,13 +9,16 @@ import { AuthModule } from './auth/auth.module';
 import { APP_GUARD } from '@nestjs/core';
 import { JwtAuthGuard } from './auth/jwt.guard';
 import { JwtModule, JwtService } from '@nestjs/jwt';
+import { AdminModule } from './admin/admin.module';
+import { GameModule } from './game/game.module';
 
 @Module({
   imports: [
     UserModule,
     AuthModule,
     MongooseModule.forRoot(appConfig.MONGO_URL),
-    AuthModule,
+    GameModule,
+    AdminModule,
     JwtModule.register({
       secret: appConfig.JWT_TOKEN_SECRET,
       signOptions: { expiresIn: '60s' },

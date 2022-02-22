@@ -8,7 +8,7 @@ import { User, UserDocument } from "./user.schema";
 @Injectable()
 export class UserDao {
   constructor(
-    @InjectModel(User.name) private userModel: Model<UserDocument>,
+    @InjectModel(User.name)private userModel: Model<UserDocument>,
     ) {}
 
   async getAll(){
@@ -37,7 +37,6 @@ export class UserDao {
   }
 
   async getUserByEmail(email: string){
-    console.log(email)
     return await this.userModel.findOne({ email: email });
   }
   
