@@ -4,6 +4,11 @@ export type createGameDto = {
   date: Date
 }
 
+export type createPlayerDto = {
+  userId: string
+  date: Date
+}
+
 export type ratingRankingInfo = {
   playerName: string,
   rating: number,

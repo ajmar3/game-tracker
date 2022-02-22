@@ -1,7 +1,8 @@
 import { Injectable, NotFoundException } from "@nestjs/common";
 import { InjectModel } from "@nestjs/mongoose";
 import { Model } from "mongoose";
-import { createGameDto } from "./game.models";
+import { User } from "../user/user.schema";
+import { createGameDto, createPlayerDto } from "./game.models";
 import { PoolGame, PoolGameDocument, PoolPlayer, PoolPlayerDocument, PoolRating, PoolRatingDocument } from "./game.schema";
 
 
@@ -79,6 +80,16 @@ export class GameDao{
     })
 
     return results
+  }
+
+  async createPlayer(user: User, name: string, date: Date) {
+    const inputModel = {
+      "user": user,
+      "name": name,
+      "createdAt": date
+    }
+    const createdPlayer = await this.playerModel.create(inputModel)
+    return createdPlayer
   }
 
   async getPlayerRating(playerId: string){

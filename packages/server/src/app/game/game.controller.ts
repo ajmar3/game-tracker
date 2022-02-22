@@ -1,5 +1,6 @@
-import { Body, Controller, Get, Param, Post } from '@nestjs/common';
-import { createGameDto } from './game.models';
+import { Body, Controller, Get, Param, Post, Req } from '@nestjs/common';
+import { Admin } from '../auth/auth.decorators';
+import { createGameDto, createPlayerDto } from './game.models';
 import { GameService } from './game.service';
 
 @Controller('game')
@@ -18,12 +19,13 @@ export class GameController {
 
 
   @Post('create')
-  async newUser(@Body() input: createGameDto) {
+  async createGame(@Body() input: createGameDto) {
     return await this.gameService.createGame(input);
   }
 
-  // @Get(':id')
-  // async getUser(@Param("id") userId: string) {
-  //   return await this.userService.getUserById(userId);
-  // }
+  @Get("me")
+  async getUser(@Req() req) {
+    return await this.gameService.getMyGameInfo(req.user.userId);
+  }
+
 }
