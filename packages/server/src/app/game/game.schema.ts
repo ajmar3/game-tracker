@@ -4,17 +4,6 @@ import * as mongoose from 'mongoose';
 import { User } from '../user/user.schema';
 
 
-@Schema()
-export class PoolGame {
-  @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'PoolPlayer' })
-  winner: PoolPlayer;
-  
-  @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'PoolPlayer' })
-  loser: PoolPlayer;
-  
-  @Prop({ required: true })
-  date: string;
-}
 
 @Schema()
 export class PoolPlayer {
@@ -27,6 +16,19 @@ export class PoolPlayer {
   @Prop({ required: true })
   createdAt: Date;
 }
+
+@Schema()
+export class PoolGame {
+  @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'PoolPlayer' })
+  winner: PoolPlayer;
+  
+  @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'PoolPlayer' })
+  loser: PoolPlayer;
+  
+  @Prop({ required: true })
+  date: string;
+}
+
 
 @Schema()
 export class PoolRating {
