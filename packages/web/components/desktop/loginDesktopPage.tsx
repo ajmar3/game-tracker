@@ -3,6 +3,7 @@ import { loginInput } from "../../models/loginModels"
 import { useMutation } from "react-query"
 import axios from "axios"
 import { useRouter } from "next/router"
+import { saveAuthCookie } from "../../utils/auth"
 
 const LoginDesktopPage: React.FC = () => {
 
@@ -14,7 +15,9 @@ const LoginDesktopPage: React.FC = () => {
   })
 
   if (sendPassword.isSuccess) {
-    router.push("/dash")
+    saveAuthCookie(sendPassword.data.data)
+    console.log(sendPassword.data.data)
+    // router.push("/dash")
   }
 
   return (

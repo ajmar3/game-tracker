@@ -10,13 +10,9 @@ export class AuthController {
 
   @Public()
   @Post('login')
-  async login(@Body() input: userLoginDto, @Res() response: Response) {
+  async login(@Body() input: userLoginDto) {
     const token = await this.authService.login(input);
-    response.cookie("Authorisation", token, {
-      httpOnly: true,
-      secure: false
-    })
-    response.send(token)
+    return token
   }
 
 }

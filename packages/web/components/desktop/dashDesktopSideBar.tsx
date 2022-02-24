@@ -22,14 +22,14 @@ const DashDesktopSideBar: React.FC = () => {
             <FontAwesomeIcon icon={faCircleDot} className="pr-4"/>
             Pool
           </li>
-          <li className={ tabSelected == "chess" ? tabSelectStyle : tabNotSelectedStyle } onClick={() => setTabSelected("chess")}>
+          {/* <li className={ tabSelected == "chess" ? tabSelectStyle : tabNotSelectedStyle } onClick={() => setTabSelected("chess")}>
             <FontAwesomeIcon icon={faChessBishop} className="pr-4"/>
             Chess
           </li>
           <li className={ tabSelected == "rotas" ? tabSelectStyle : tabNotSelectedStyle } onClick={() => setTabSelected("rotas")}>
             <FontAwesomeIcon icon={faClipboardCheck} className="pr-4"/>
             Rotas
-          </li>
+          </li> */}
         </ul>
       </div>
     </div>

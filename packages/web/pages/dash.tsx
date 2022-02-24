@@ -10,18 +10,30 @@ export async function getServerSideProps(context: any) {
   if (!userInfo) {
     return {
       redirect: {
-        permanent: false,
+        permanent: true,
         destination: "/login"
       }
     }
   }
   return {
-    props: {}, // will be passed to the page component as props
+    props: {
+      userInfo: userInfo
+    }, // will be passed to the page component as props
   }
 }
 
+type DashPageProps = {
+  userInfo: {
+    userId: string,
+    firstName: string,
+    lastName: string,
+    email: string,
+    iat: number,
+    exp: number
+  }
+}
 
-const DashPage: NextPage = () => {
+const DashPage: NextPage<DashPageProps> = (props) => {
   
   const isDesktop = useMediaQuery({ minWidth: 1440 })
 
@@ -31,7 +43,7 @@ const DashPage: NextPage = () => {
         <Head>
           <title>Desktop</title>
         </Head>
-        <DashDesktopPage />
+        <DashDesktopPage {...props.userInfo}/>
       </div>
     )
   }

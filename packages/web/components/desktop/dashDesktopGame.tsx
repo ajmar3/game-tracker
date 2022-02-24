@@ -4,14 +4,20 @@ import { faTrophy, faMedal, faHashtag } from '@fortawesome/free-solid-svg-icons'
 import DashDesktopNav from "./dashDesktopNav"
 import DashDesktopAllGamesTable from "./dashDesktopAllGamesTable"
 import DashDesktopRatingsTable from "./dashDesktopRatingsTable"
+import { useQuery } from "react-query"
+import axios from "axios"
+import { sendRequest } from "../../utils/requests"
 
 
 const DashDesktopGame: React.FC = () => {
 
-  const [ tabSelected, setTabSelected ] = useState("pool")
+  const { isError, data, error } = useQuery('myGameData', () => {
+    return sendRequest("/game/me", "GET")
+    // return axios.get('http://localhost:5000/game/me', { withCredentials: true })
+  })
 
-  const tabSelectStyle = "py-5 bg-med-dark-blue border-l-8 border-light-blue pl-14";
-  const tabNotSelectedStyle = "py-5 pl-14 hover:bg-med-dark-blue"
+  if (data) 
+    console.log(data)
 
   return (
     <div className="h-full w-full text-white">

@@ -50,7 +50,7 @@ export class GameService{
 
     const results: myGameInfo = {
       totalGames: allMyGames.length,
-      winPercentage: gamesWon.length / allMyGames.length * 100,
+      winPercentage: allMyGames.length > 0 ? gamesWon.length / allMyGames.length * 100 : -1,
       ranking: rank
     }
 

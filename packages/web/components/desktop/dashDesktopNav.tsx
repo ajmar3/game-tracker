@@ -2,8 +2,12 @@ import { useState } from "react"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faBell } from '@fortawesome/free-solid-svg-icons'
 
+type DashDesktopNavProps = {
+  firstName: string,
+  lastName: string
+} 
 
-const DashDesktopNav: React.FC = () => {
+const DashDesktopNav: React.FC<DashDesktopNavProps> = (props) => {
 
   const [ dropDownActive, setDropDownActive ] = useState(false)
 
@@ -12,7 +16,7 @@ const DashDesktopNav: React.FC = () => {
   return (
     <div className="h-full w-full bg-med-dark-blue text-white flex items-center text-4xl">
       <div className="pl-10">
-        Welcome back, Player
+        Welcome back, {props.firstName}
       </div>
       <div className=" w-3/4 h-full flex justify-end items-center">
         <FontAwesomeIcon icon={faBell} className="pr-10"/>

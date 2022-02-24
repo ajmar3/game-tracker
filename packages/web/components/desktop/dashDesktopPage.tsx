@@ -3,7 +3,14 @@ import Head from "next/head"
 import DashDesktopSideBar from "./dashDesktopSideBar"
 import DashDesktopBody from "./dashDesktopBody"
 
-const DashDesktopPage: React.FC = () => {
+type DashDesktopPageProps = {
+  userId: string,
+  firstName: string,
+  lastName: string,
+  email: string
+}
+
+const DashDesktopPage: React.FC<DashDesktopPageProps> = (props) => {
 
   return (
     <div className="w-full h-full grid grid-cols-6">
@@ -11,7 +18,7 @@ const DashDesktopPage: React.FC = () => {
         <DashDesktopSideBar />
       </div>
       <div className="col-span-5">
-        <DashDesktopBody />
+        <DashDesktopBody {...props}/>
       </div>
     </div>
   )
