@@ -6,6 +6,8 @@ import { appConfig } from './config'
 async function bootstrap() {
 
   process.env.JWT_TOKEN_SECRET = appConfig.JWT_TOKEN_SECRET;
+  process.env.PORT = appConfig.PORT
+  process.env.FRONTEND = appConfig.FRONTEND
 
   const app = await NestFactory.create(AppModule);
 
@@ -19,8 +21,7 @@ async function bootstrap() {
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api', app, document);
 
-
-  app.enableCors({credentials: true, origin: 'http://localhost:3000'})
-  await app.listen(appConfig.PORT);
+  app.enableCors({credentials: true, origin: process.env.FRONTEND})
+  await app.listen(process.env.PORT);
 }
 bootstrap();

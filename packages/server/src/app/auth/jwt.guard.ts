@@ -26,11 +26,9 @@ export class JwtAuthGuard extends AuthGuard('jwt') {
 
     if(isAdmin){
       const req = context.switchToHttp().getRequest()
-      console.log(req.get("Authorization"))
       const header: string = req.get("Authorization")
       const token = header.split(" ")[1]
       const payload = this.jwtService.verify(token);
-      console.log("payload", payload)
     }
 
     if (isPublic) {

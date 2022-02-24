@@ -1,5 +1,5 @@
 dist/
 packages/server/package-lock.json
 packages/web/package-lock.json
-
+config.js
 packages/server/node_modules
