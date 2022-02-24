@@ -23,7 +23,7 @@ export class AuthService {
      throw new UnauthorizedException("Username or password is incorrect");
 
     const token = await this.jwtService.signAsync(
-      { userId: user._id, email: user.email, firstName: user.firstName, lastName: user.lastName }
+      { userId: user._id, email: user.email, firstName: user.firstName, lastName: user.lastName, isAdmin: user.isAdmin }
     );
     
     return token
