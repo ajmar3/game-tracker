@@ -1,5 +1,26 @@
+import { useQuery } from "react-query"
+import { sendRequest } from "../../utils/requests"
 
 const DashDesktopRatingsTable: React.FC = () => {
+
+  const rankingsQuery = useQuery('getRankings', () => {
+    return sendRequest("/game/rankings", "GET")
+  })
+
+  const tableRows: any[] = []
+
+  if (rankingsQuery.data) {
+    rankingsQuery.data.data.foreach((row: any, index: number) => {
+      tableRows.push(
+        <tr className="divide-x divide-y divide-super-light-blue" key={index}>
+          <td className="p-2">{row.playerName}</td>
+          <td className="p-2">{row.rating}</td>
+          <td className="p-2">{row.lastChange}</td>
+          <td className="p-2">{row.ranking}</td>
+      </tr>
+      )
+    })
+  }
 
   return (
     <div className="w-full h-full text-white bg-med-blue relative rounded-md">

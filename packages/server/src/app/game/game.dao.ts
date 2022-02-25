@@ -15,7 +15,7 @@ export class GameDao{
     ) {}
 
   async getAllGames(){
-    return await this.gameModel.find().limit(30);
+    return await this.gameModel.find().populate("winner").populate("loser").limit(30);
   }
 
   async getAllPlayerGames(playerId: string) {

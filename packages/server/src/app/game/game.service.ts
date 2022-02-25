@@ -1,13 +1,33 @@
 import { Injectable } from '@nestjs/common';
 import { GameDao } from './game.dao';
-import { createGameDto, myGameInfo, ratingRankingInfo } from './game.models';
+import { createGameDto, gameInfoType, myGameInfo, playerInfoType, ratingRankingInfo } from './game.models';
 
 @Injectable()
 export class GameService{
   constructor(private gameDao: GameDao) {}
 
   async getAllGames(){
-    return await this.gameDao.getAllGames();
+    const allGames = await this.gameDao.getAllGames();
+    const results: gameInfoType[] = allGames.map(game => {
+      return {
+        winner: game.winner.name,
+        loser: game.loser.name,
+        date: game.date
+      }
+    })
+    return results
+  }
+
+  async getAllPlayers(){
+    const allPlayers = await this.gameDao.getAllPlayers();
+    const results: playerInfoType[] = allPlayers.map((mongoPlayer: any) => {
+      const nameWithInitials = mongoPlayer.name.split(" ")[0] + mongoPlayer.name.split(" ")[1].substr(0, 1)
+      return {
+        name: nameWithInitials,
+        id: mongoPlayer._id
+      }
+    } )
+    return results
   }
 
   async getRankingInfo(){
@@ -31,6 +51,8 @@ export class GameService{
 
       results.push(playerRatingRankingInfo)
     })
+
+    return results
   }
 
   async createGame(input: createGameDto) {

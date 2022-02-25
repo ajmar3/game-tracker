@@ -21,3 +21,14 @@ export type myGameInfo = {
   winPercentage: number,
   ranking: number
 }
+
+export type gameInfoType = {
+  winner: string,
+  loser: string,
+  date: Date
+}
+
+export type playerInfoType = {
+  name: string
+  id: string
+}

@@ -12,6 +12,11 @@ export class GameController {
     return await this.gameService.getAllGames();
   }
 
+  @Get('players')
+  async getAllPlayers() {
+    return await this.gameService.getAllPlayers();
+  }
+
   @Get('rankings')
   async getRankingInfo() {
     return await this.gameService.getRankingInfo();

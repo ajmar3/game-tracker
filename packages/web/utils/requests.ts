@@ -8,4 +8,5 @@ export const sendRequest = (url: string, requestType: "GET" | "POST", data?: any
   if (requestType == "GET") {
     return axios.get(config.SERVER_URL + url, { withCredentials: true, headers: { "Authorisation": token } })
   }
+  return axios.post(config.SERVER_URL + url, data, { withCredentials: true, headers: { "Authorisation": token } })
 }

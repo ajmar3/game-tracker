@@ -11,13 +11,10 @@ import { sendRequest } from "../../utils/requests"
 
 const DashDesktopGame: React.FC = () => {
 
-  const { isError, data, error } = useQuery('myGameData', () => {
+  const { isError, data } = useQuery('myGameData', () => {
     return sendRequest("/game/me", "GET")
-    // return axios.get('http://localhost:5000/game/me', { withCredentials: true })
   })
 
-  if (data) 
-    console.log(data)
 
   return (
     <div className="h-full w-full text-white">
@@ -27,21 +24,33 @@ const DashDesktopGame: React.FC = () => {
             <FontAwesomeIcon icon={faHashtag} className="text-5xl bg-dark-blue rounded-full ml-10 text-center p-5 flex justify-center items-center"/>
             <div className="flex-col pl-4">
               <div className="text-2xl">Total games played</div>
-              <div className="text-4xl font-bold">16</div>
+              {isError || !data ?
+                <div className="text-4xl font-bold">-</div> 
+                :
+                <div className="text-4xl font-bold">data.totalGames</div>
+              }
             </div>
           </div>
           <div className="w-1/3 h-2/3 mx-20 rounded-2xl bg-med-blue flex items-center">
             <FontAwesomeIcon icon={faTrophy} className="text-5xl bg-dark-blue rounded-full ml-10 text-center p-5 flex justify-center items-center"/>
             <div className="flex-col pl-4">
               <div className="text-2xl">Win percentage</div>
-              <div className="text-4xl font-bold">60%</div>
+              {isError ?
+                <div className="text-4xl font-bold">-</div> 
+                :
+                <div className="text-4xl font-bold">data.winPercentage</div>
+              }
             </div>
           </div>
           <div className="w-1/3 h-2/3 mx-20 rounded-2xl bg-med-blue flex items-center">
             <FontAwesomeIcon icon={faMedal} className="text-5xl bg-dark-blue rounded-full ml-10 text-center p-5 flex justify-center items-center"/>
             <div className="flex-col pl-4">
               <div className="text-2xl">Current Rank</div>
-              <div className="text-4xl font-bold">3rd</div>
+              {isError ?
+                <div className="text-4xl font-bold">-</div> 
+                :
+                <div className="text-4xl font-bold">data.ranking</div>
+              }
             </div>
           </div>
         </div>

@@ -26,7 +26,7 @@ export class PoolGame {
   loser: PoolPlayer;
   
   @Prop({ required: true })
-  date: string;
+  date: Date;
 }
 
 
