@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPlus, faChevronDown } from '@fortawesome/free-solid-svg-icons'
 import { useMutation, useQuery } from "react-query";
@@ -10,33 +10,50 @@ const DashDesktopAllGamesTable: React.FC = () => {
   const [ drawerOpen, setDrawerOpen ] = useState(false);
   const [ inputError, setInputError ] = useState(false);
   const [ newGameData, setNewGameData ] = useState<{ winner: string | null, loser: string | null, date: Date }>({ winner: null, loser: null, date: new Date()})
+  const [ playerOptions, setPlayerOptions ] = useState([])
 
   const gamesQuery = useQuery('allGames', () => {
     return sendRequest("/game/all", "GET")
   })
 
   const playersQuery = useQuery('allPlayers', () => {
-    return sendRequest("/game/all", "GET")
+    return sendRequest("/game/players", "GET")
   })
 
   const newGameMutation = useMutation((input: any) => {
-    return sendRequest("/gane/create", "POST", input)
+    console.log("hello")
+    return sendRequest("/game/create", "POST", input)
   })
+
+  useEffect(() => {
+    if (playersQuery.data && playersQuery.data.data) {
+    setPlayerOptions(
+        playersQuery.data.data.map((row: any) => {
+          return (
+            <option className="text-lg" value={row.id} key={row.id}>{row.name}</option>
+          )
+        })
+    )
+      }
+  }, [playersQuery.data])
 
   const handleSubmit = () => {
     if(newGameData.winner == null || newGameData.winner == "default" || newGameData.loser == null || newGameData.loser == "default"){
       setInputError(true)
+      console.log("hello there maye")
       return
     }
+
     setInputError(false)
+    console.log(newGameData)
     newGameMutation.mutate(newGameData)
   }
 
   const tableRows: any[] = []
-  const playerOptions: any[] = []
 
-  if (gamesQuery.data) {
-    gamesQuery.data.data.foreach((row: any, index: number) => {
+  if (gamesQuery.data && gamesQuery.data.data.length) {
+    console.log("gamesQuery",gamesQuery.data.data)
+    gamesQuery.data.data.forEach((row: any, index: number) => {
       tableRows.push(
         <tr className="divide-x divide-y divide-super-light-blue" key={index}>
           <td className="p-2">{row.date}</td>
@@ -47,13 +64,6 @@ const DashDesktopAllGamesTable: React.FC = () => {
     })
   }
 
-  if (playersQuery.data) {
-    playersQuery.data.data.foreach((row: any) => {
-      playerOptions.push(
-        <option className="text-lg" value={row.id} key={row.id}>{row.name}</option>
-      )
-    })
-  }
 
   return (
     <div className="w-full h-full text-white bg-med-blue relative rounded-md">
@@ -100,7 +110,7 @@ const DashDesktopAllGamesTable: React.FC = () => {
               </div>
             </div>
             <div className="flex justify-center">
-              <div className="text-2xl text-center mt-3 p-2 bg-dark-blue w-fit rounded-lg cursor-pointer" onClick={() => {handleSubmit}}>
+              <div className="text-2xl text-center mt-3 p-2 bg-dark-blue w-fit rounded-lg cursor-pointer" onClick={() => {handleSubmit()}}>
                 Submit
               </div>
             </div>

@@ -1,13 +1,13 @@
 import { NextPage } from "next";
 import Head from "next/head";
 import { useMediaQuery } from 'react-responsive'
+import AdminInputBody from "../components/desktop/adminDash";
 import DashDesktopPage from "../components/desktop/dashDesktopPage";
-import DashMobilePage from "../components/mobile/dashDesktopPage";
 import { checkLoggedIn } from "../utils/auth";
 
 export async function getServerSideProps(context: any) {
   const userInfo = await checkLoggedIn(context.req)
-  if (!userInfo) {
+  if (!userInfo || !userInfo.isAdmin) {
     return {
       redirect: {
         permanent: true,
@@ -22,7 +22,7 @@ export async function getServerSideProps(context: any) {
   }
 }
 
-type DashPageProps = {
+type AdminPageProps = {
   userInfo: {
     userId: string,
     firstName: string,
@@ -33,7 +33,7 @@ type DashPageProps = {
   }
 }
 
-const DashPage: NextPage<DashPageProps> = (props) => {
+const DashPage: NextPage<AdminPageProps> = (props) => {
   
   const isDesktop = useMediaQuery({ minWidth: 1440 })
 
@@ -43,7 +43,7 @@ const DashPage: NextPage<DashPageProps> = (props) => {
         <Head>
           <title>Desktop</title>
         </Head>
-        <DashDesktopPage {...props.userInfo}/>
+        <AdminInputBody />
       </div>
     )
   }

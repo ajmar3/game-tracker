@@ -18,14 +18,22 @@ export class AdminService{
     
     const emailDomain = input.email.substring(input.email.indexOf("@"))
 
-    if (emailDomain != "@mps-data.co.uk")
-      throw new BadRequestException("Please enter a valid email")
+    // if (emailDomain != "@mps-data.co.uk")
+    //   throw new BadRequestException("Please enter a valid email")
     
     if (existingUser)
       throw new ConflictException("User with this email already exists");
 
     const hashedPassword = await bcrypt.hash(input.password, 14)
     const createdUser = await this.userDao.createUser(input, hashedPassword)
+
+    const createdPlayerInput = {
+      userId: createdUser._id,
+      date: new Date()
+    }
+
+    const createdPlayer = await this.createPlayer(createdPlayerInput)
+    const createdrating = await this.createFirstrating(createdUser._id)
 
     return createdUser
   }
@@ -45,6 +53,12 @@ export class AdminService{
     const createdPlayer = await this.gameDao.createPlayer(user, name, input.date)
 
     return createdPlayer
+  }
+
+  async createFirstrating(userId: string) {
+    const player = await this.gameDao.getPlayerFromUser(userId)
+    const createdRating = await this.gameDao.createNewRating(player._id, new Date(), 1000)
+    return createdRating
   }
 
 }

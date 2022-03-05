@@ -13,6 +13,7 @@ export class AdminController {
   @Admin()
   @Post('/create/player')
   async createGame(@Body() input: createPlayerDto) {
+    console.log("adminInput", input)
     return await this.adminService.createPlayer(input);
   }
 

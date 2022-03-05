@@ -26,7 +26,12 @@ const LoginPage: NextPage = () => {
         <Head>
           <title>MpsBelfast</title>
         </Head>
-        <LoginMobilePage />
+        <div className="flex justify-center h-full w-full items-center">
+          <div className="p-4 mb-4 text-sm text-blue-700 bg-blue-100 rounded-lg dark:bg-blue-200 dark:text-blue-800 w-fit" role="alert">
+            <span className="font-medium">Please use desktop site!</span>
+          </div>
+        </div>
+        {/* <LoginMobilePage /> */}
       </div>
     )
   }

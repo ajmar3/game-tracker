@@ -11,7 +11,7 @@ import { sendRequest } from "../../utils/requests"
 
 const DashDesktopGame: React.FC = () => {
 
-  const { isError, data } = useQuery('myGameData', () => {
+  const myGameDataQuery = useQuery('myGameData', () => {
     return sendRequest("/game/me", "GET")
   })
 
@@ -24,10 +24,10 @@ const DashDesktopGame: React.FC = () => {
             <FontAwesomeIcon icon={faHashtag} className="text-5xl bg-dark-blue rounded-full ml-10 text-center p-5 flex justify-center items-center"/>
             <div className="flex-col pl-4">
               <div className="text-2xl">Total games played</div>
-              {isError || !data ?
+              {myGameDataQuery.isError || !myGameDataQuery.data ?
                 <div className="text-4xl font-bold">-</div> 
                 :
-                <div className="text-4xl font-bold">data.totalGames</div>
+                <div className="text-4xl font-bold">{myGameDataQuery.data.data.totalGames}</div>
               }
             </div>
           </div>
@@ -35,10 +35,10 @@ const DashDesktopGame: React.FC = () => {
             <FontAwesomeIcon icon={faTrophy} className="text-5xl bg-dark-blue rounded-full ml-10 text-center p-5 flex justify-center items-center"/>
             <div className="flex-col pl-4">
               <div className="text-2xl">Win percentage</div>
-              {isError ?
+              {myGameDataQuery.isError || !myGameDataQuery.data ?
                 <div className="text-4xl font-bold">-</div> 
                 :
-                <div className="text-4xl font-bold">data.winPercentage</div>
+                <div className="text-4xl font-bold">{myGameDataQuery.data.data.winPercentage}</div>
               }
             </div>
           </div>
@@ -46,10 +46,10 @@ const DashDesktopGame: React.FC = () => {
             <FontAwesomeIcon icon={faMedal} className="text-5xl bg-dark-blue rounded-full ml-10 text-center p-5 flex justify-center items-center"/>
             <div className="flex-col pl-4">
               <div className="text-2xl">Current Rank</div>
-              {isError ?
+              {myGameDataQuery.isError || !myGameDataQuery.data ?
                 <div className="text-4xl font-bold">-</div> 
                 :
-                <div className="text-4xl font-bold">data.ranking</div>
+                <div className="text-4xl font-bold">{myGameDataQuery.data.data.ranking}</div>
               }
             </div>
           </div>

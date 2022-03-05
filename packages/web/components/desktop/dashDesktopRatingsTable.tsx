@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react"
 import { useQuery } from "react-query"
 import { sendRequest } from "../../utils/requests"
 
@@ -7,21 +8,28 @@ const DashDesktopRatingsTable: React.FC = () => {
     return sendRequest("/game/rankings", "GET")
   })
 
-  const tableRows: any[] = []
+  const [tableRows, setTableRows] = useState([]);
+
+  useEffect(() => {
+    console.log(rankingsQuery.data?.data)
+    if (rankingsQuery.data) {
+      setTableRows(rankingsQuery.data.data.map((row: any, index: number) => {
+        return (
+          <tr className="divide-x divide-y divide-super-light-blue" key={index}>
+            <td className="p-2">{row.playerName}</td>
+            <td className="p-2">{row.rating}</td>
+            <td className="p-2">{row.lastChange}</td>
+            <td className="p-2">{row.ranking}</td>
+        </tr>
+        )
+      })
+      )
+    }
+  }, [rankingsQuery.data])
 
   if (rankingsQuery.data) {
-    rankingsQuery.data.data.foreach((row: any, index: number) => {
-      tableRows.push(
-        <tr className="divide-x divide-y divide-super-light-blue" key={index}>
-          <td className="p-2">{row.playerName}</td>
-          <td className="p-2">{row.rating}</td>
-          <td className="p-2">{row.lastChange}</td>
-          <td className="p-2">{row.ranking}</td>
-      </tr>
-      )
-    })
+    console.log(rankingsQuery.data?.data)
   }
-
   return (
     <div className="w-full h-full text-white bg-med-blue relative rounded-md">
       <table className="table-auto w-full">
@@ -34,24 +42,7 @@ const DashDesktopRatingsTable: React.FC = () => {
           </tr>
         </thead>
         <tbody className="text-xl divide-y divide-x divide-super-light-blue">
-          <tr className="divide-x divide-y divide-super-light-blue">
-            <td className="p-2">Aaron Martin</td>
-            <td className="p-2 text-right">1200</td>
-            <td className="p-2 text-right">+20</td>
-            <td className="p-2 text-right">1</td>
-          </tr>
-          <tr className="divide-x divide-y divide-super-light-blue">
-            <td className="p-2">Aaron Martin</td>
-            <td className="p-2 text-right">1200</td>
-            <td className="p-2 text-right">+20</td>
-            <td className="p-2 text-right">1</td>
-          </tr>
-          <tr className="divide-x divide-y divide-super-light-blue">
-            <td className="p-2">Aaron Martin</td>
-            <td className="p-2 text-right">1200</td>
-            <td className="p-2 text-right">+20</td>
-            <td className="p-2 text-right">1</td>
-          </tr>
+          {tableRows}
         </tbody>
       </table>
     </div>

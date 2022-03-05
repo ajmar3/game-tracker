@@ -1,6 +1,6 @@
 import { Injectable, NotFoundException } from "@nestjs/common";
 import { InjectModel } from "@nestjs/mongoose";
-import { Model } from "mongoose";
+import { isValidObjectId, Model } from "mongoose";
 import { User } from "../user/user.schema";
 import { createGameDto, createPlayerDto } from "./game.models";
 import { PoolGame, PoolGameDocument, PoolPlayer, PoolPlayerDocument, PoolRating, PoolRatingDocument } from "./game.schema";
@@ -27,12 +27,13 @@ export class GameDao{
   }
 
   async getAllPlayers(){
-    return await this.playerModel.find();
+    const results = await this.playerModel.find();
+    return results
   }
 
   async createGame(input: createGameDto) {
-    const winner = this.playerModel.findById(input.winner)
-    const loser = this.playerModel.findById(input.loser)
+    const winner = await this.playerModel.findById(input.winner)
+    const loser = await this.playerModel.findById(input.loser)
 
     if (!winner || !loser)
       throw new NotFoundException("Could not find user with given id");
@@ -49,19 +50,17 @@ export class GameDao{
   }
 
   async getMostRecentRatings() {
-    const results: PoolRating[] = []
+    let results: any[] = []
     const allPlayers = await this.getAllPlayers();
-
-    allPlayers.forEach(async player => {
-      const currentrating = await this.ratingModel
-      .findOne({ "player": player.id })
-      .populate("player")
-      .sort({ "createdAt": "desc" })
-      .limit(1);
     
+    for (let i=0; i<allPlayers.length; i++) {
+      const currentrating = await this.ratingModel
+      .findOne({ "player": allPlayers[i]._id})
+      .populate('player')
+      .sort({ "createdAt": "desc" })
+      
       results.push(currentrating)
-    })
-
+    }
     return results
   }
 
@@ -69,16 +68,17 @@ export class GameDao{
     const results: PoolRating[] = []
     const allPlayers = await this.getAllPlayers();
 
-    allPlayers.forEach(async player => {
+    for (let i=0; i<allPlayers.length; i++) {
       const previousrating = await this.ratingModel
-        .findOne({ "player": player.id })
-        .populate("player")
-        .sort({ "createdAt": "desc" })
-        .skip(1);
-      
-      results.push(previousrating)
-    })
+      .findOne({ "player": allPlayers[i]._id})
+      .populate('player')
+      .sort({ "createdAt": "desc" })
+      .skip(1);
 
+      if(previousrating) {
+        results.push(previousrating)
+      }
+    }
     return results
   }
 
@@ -93,7 +93,9 @@ export class GameDao{
   }
 
   async getPlayerRating(playerId: string){
-    const result = await this.ratingModel.findOne({ "player": playerId });
+    const result = await this.ratingModel
+      .findOne({ "player": playerId })
+      .sort({ "createdAt": "desc" })
     return result
   }
 
@@ -108,5 +110,5 @@ export class GameDao{
 
     return createdRating
   }
-  
+
 }

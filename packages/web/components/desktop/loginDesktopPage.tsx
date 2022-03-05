@@ -16,8 +16,7 @@ const LoginDesktopPage: React.FC = () => {
 
   if (sendPassword.isSuccess) {
     saveAuthCookie(sendPassword.data.data)
-    console.log(sendPassword.data.data)
-    // router.push("/dash")
+    router.push("/dash")
   }
 
   return (
